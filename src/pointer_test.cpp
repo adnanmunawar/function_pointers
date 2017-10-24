@@ -53,6 +53,8 @@ public:
   }
   void B_func(int val){
     printf("This is function in B %d \n", val);
+    this->b_val = 4;
+    printf("The new b_val is %d \n", b_val);
   }
 
   void pass_ptrTo_A(){
