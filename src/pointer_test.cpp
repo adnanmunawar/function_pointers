@@ -12,9 +12,11 @@ public:
   Conversion(){}
   ~Conversion(){}
   void (U::*my_func)(V);
+  boost::function<void (V)> my_func2;
   void trythis(const boost::function<void (V)> cal_fcn){
     printf("2nd Pointer function in A called\n");
-    cal_fcn(33);
+    my_func2 = cal_fcn;
+    my_func2(505);
 
   }
 
