@@ -17,12 +17,15 @@ public:
    }
    ~A(){
    }
-
+   void (B::*fcn2)(int);
    template <typename T, typename P>
    void init(void (T::*b_func)(P), T &obj){
      printf("Pointer function in A called \n");
      Conversion<T,P> con;
      con.my_func = b_func;
+     fcn2 = b_func;
+     (obj.*fcn2)(15);
+     (obj.*(con.my_func))(2);
    }
 };
 
