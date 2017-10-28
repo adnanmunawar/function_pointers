@@ -17,4 +17,6 @@ else()
 endif()
 
 add_executable(pointer_test src/pointer_test.cpp)
+add_executable(template_fcn src/template_fcn.cpp)
 target_link_libraries(pointer_test ${Boost_LIBRARIES})
+target_link_libraries(template_fcn ${Boost_LIBRARIES})
