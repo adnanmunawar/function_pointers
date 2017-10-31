@@ -8,14 +8,18 @@ class A{
 public:
   A(){}
   ~A(){}
-  template <typename Cl>
-  void bind_func(void (Cl::*fcn)(D), Cl* obj){
-    my_func = boost::bind(fcn, obj, _1);
-  }
+  template <typename C>
+  void bind_func(void (C::*fcn)(D), C* obj);
   boost::function<void (D)> my_func;
 };
 
-class B: public A<int>, public A<double>, public A<std::string>{
+template<typename D>
+template<typename C>
+void A<D>::bind_func(void (C::*fcn)(D), C* obj){
+  my_func = boost::bind(fcn, obj, _1);
+}
+
+class B: public A<int>, public A<std::string>{
 public:
   B(){
     my_int = 1;
@@ -47,9 +51,6 @@ public:
   void assign_int_func(){
   A<int>::bind_func(&C::int_func, this);
   }
-  void assign_double_func(){
-  A<double>::bind_func(&C::double_func, this);
-  }
   void assign_char_func(){
   A<std::string>::bind_func(&C::str_func, this);
   }
@@ -57,7 +58,6 @@ public:
   void assign_fcns(){
     assign_int_func();
     assign_char_func();
-    assign_double_func();
   }
 };
 
