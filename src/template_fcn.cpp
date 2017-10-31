@@ -3,48 +3,50 @@
 #include <stdio.h>
 #include <string.h>
 
-
-class B{
-public:
-  B(){}
-  ~B(){}
-
-  template<typename U>
-  using FCN = boost::function<void (U)>;
-
-  FCN<std::string> my_func;
-  template<typename Q>
-  void assign_fcn(boost::function<void (Q)> func){
-    bool flag = std::is_same<Q, bool>::value;
-    printf("Types are same? : %d \n", flag);
-    my_func = func;
-    my_func("Hey");
-  }
-
-  void run(){
-  //  my_func("YO");
-  }
-};
-
-
+template<typename D>
 class A{
 public:
   A(){}
   ~A(){}
-void print_fcn(std::string str){
-  printf("Passed String is %s \n", str.c_str());
-}
-void pass(){
-  objB.assign_fcn<std::string>(boost::bind(&A::print_fcn, this, _1));
-}
-B objB;
+  template <typename Cl>
+  void bind_func(void (Cl::*fcn)(D), Cl* obj){
+    my_func = boost::bind(fcn, obj, _1);
+  }
+  boost::function<void (D)> my_func;
+};
+
+class B: public A<int>, public A<char>{
+public:
+  B(){}
+  ~B(){}
+  void run(){
+    
+  }
+};
+
+class C: public B{
+public:
+  C(){}
+  ~C(){}
+  void int_func(int x){
+    printf("Printing passed char %d", x);
+  }
+  void char_func(char x){
+    printf("Printing passed char %c", x);
+  }
+  void assign_int_func(){
+  A<int>::bind_func(&C::int_func, this);
+  }
+  void assign_char_func(){
+  A<char>::bind_func(&C::char_func, this);
+  }
 };
 
 
 int main(){
-  A objA;
-
-  objA.pass();
+  C cobj;
+  cobj.assign_int_func();
+  //cobj.assign_char_func();
 
   return 0;
 }
