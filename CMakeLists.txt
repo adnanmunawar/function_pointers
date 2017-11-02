@@ -18,5 +18,8 @@ endif()
 
 add_executable(pointer_test src/pointer_test.cpp)
 add_executable(template_fcn src/template_fcn.cpp)
+add_executable(test_sharedlib src/test_sharedlib.cpp)
+add_library(share_test SHARED src/sharedlib_test.cpp)
 target_link_libraries(pointer_test ${Boost_LIBRARIES})
 target_link_libraries(template_fcn ${Boost_LIBRARIES})
+target_link_libraries(test_sharedlib share_test)
