@@ -26,7 +26,7 @@ int main(){
     return -1;
   }
   else{
-       factory create = (factory)((void*)(maker));
+       factory create = (factory)(maker);
        obj = create();
      }
 
