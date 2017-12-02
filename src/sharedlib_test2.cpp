@@ -33,6 +33,8 @@ int main(){
   double val = 25;
   obj->set_double(val);
   printf("The new value of m_double is %f \n", obj->m_double);
+  val = val * 5;
+  obj->set_double(val, "Overloaded Fcn");
 
 
 

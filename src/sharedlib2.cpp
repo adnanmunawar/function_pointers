@@ -2,11 +2,13 @@
 #define SHAREDLIB2_H
 
 #include <stdio.h>
+#include <string>
 
 class TestClass{
 public:
   TestClass();
   void set_double(double &a_a);
+  void set_double(double&a_a, std::string str);
   void set_int(int &a_i);
   double get_double();
   double m_double;
@@ -25,6 +27,11 @@ double TestClass::get_double(){
 
 void TestClass::set_double(double &a_a){
   m_double = a_a;
+}
+
+void TestClass::set_double(double &a_a, std::string str){
+  m_double = a_a;
+  printf("And the passed string is %s\n", str.c_str());
 }
 
 void TestClass::set_int(int &a_i){
