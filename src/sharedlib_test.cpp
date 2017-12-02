@@ -1,15 +1,34 @@
-#ifndef SHARED_H
-#define SHARED_H
-#include "stdio.h"
-#include "string"
+#include <stdio.h>
+#include <string>
+#include <dlfcn.h>
 
 extern "C"{
-int addfcn123(int a, int b){
-  return a+b;
+int (*addfcn)(int, int);
+void(*print_str)(std::string);
+}
+const char *error;
+
+int main(){
+  printf("Starting Shared Lib Code\n");
+
+void* handle = dlopen("./libshared_lib.dylib", RTLD_LOCAL|RTLD_LAZY);
+if(handle == NULL){
+  printf("Error: Failed to load shared lib %s\n", dlerror());
+  dlclose(handle);
+  handle = NULL;
+}
+else{
+printf("Found Library \n");
+dlerror();
+*(void**)(&addfcn) = dlsym(handle, "addfcn123");
+*(void**)(&print_str) = dlsym(handle, "print_str123");
+if((!addfcn)||(!print_str)){
+  printf("Error: Failed to load function %s\n", dlerror());
 }
 
-void print_str123(std::string str){
-  printf("The passed string is %s", str.c_str());
+int val = addfcn(3,4);
+printf("Added val is %d\n", val);
+print_str("This is what I am printing\n");
+dlclose(handle);
 }
 }
-#endif
