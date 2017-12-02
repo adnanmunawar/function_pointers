@@ -20,17 +20,20 @@ int main(){
   typedef TestClass* (*factory)();
   TestClass* obj;
   // factory_func factory;
-  void* maker = dlsym(libhandle, "create");
-  if (!maker){
+  factory create = (factory) dlsym(libhandle, "create");
+  if (!create){
     printf("Failed to find Factory Function\n");
     return -1;
   }
   else{
-       factory create = (factory)(maker);
        obj = create();
      }
 
   printf("The value of m_double is %f \n", obj->m_double);
+  double val = 25;
+  obj->set_double(val);
+  printf("The new value of m_double is %f \n", obj->m_double);
+
 
 
 
