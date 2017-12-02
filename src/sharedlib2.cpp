@@ -6,7 +6,7 @@
 
 class TestClass{
 public:
-  TestClass();
+  TestClass(double a_a);
   void set_double(double &a_a);
   void set_double(double&a_a, std::string str);
   void set_int(int &a_i);
@@ -16,9 +16,9 @@ public:
 
 };
 
-TestClass::TestClass(){
+TestClass::TestClass(double a_a){
   printf("Creating Test Class\n");
-  m_double = 50;
+  m_double = a_a;
 }
 
 double TestClass::get_double(){
@@ -38,8 +38,8 @@ void TestClass::set_int(int &a_i){
   m_int[0] = a_i;
 }
 
-extern "C" TestClass* create(){
-  return new TestClass;
+extern "C" TestClass* create(double a_a){
+  return new TestClass(a_a);
 }
 
 #endif

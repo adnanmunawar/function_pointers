@@ -17,7 +17,7 @@ int main(){
     printf("Found Lib \n");
   }
   dlerror();
-  typedef TestClass* (*factory)();
+  typedef TestClass* (*factory)(double);
   TestClass* obj;
   // factory_func factory;
   factory create = (factory) dlsym(libhandle, "create");
@@ -26,7 +26,7 @@ int main(){
     return -1;
   }
   else{
-       obj = create();
+       obj = create(300);
      }
 
   printf("The value of m_double is %f \n", obj->m_double);
