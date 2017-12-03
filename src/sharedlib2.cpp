@@ -38,8 +38,15 @@ void TestClass::set_int(int &a_i){
   m_int[0] = a_i;
 }
 
-extern "C" TestClass* create(double a_a){
+extern "C"{
+TestClass* create(double a_a){
   return new TestClass(a_a);
+}
+
+void destroy(TestClass* obj){
+    printf("Destroying Object \n");
+    delete obj;
+}
 }
 
 #endif

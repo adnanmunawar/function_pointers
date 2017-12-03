@@ -2,6 +2,10 @@
 #include <stdio.h>
 #include "sharedlib2.cpp"
 
+
+typedef TestClass* (*factory_create)(double);
+typedef void (*factory_destroy)(TestClass*);
+
 int main(){
 
   printf("Starting Main\n");
@@ -17,12 +21,12 @@ int main(){
     printf("Found Lib \n");
   }
   dlerror();
-  typedef TestClass* (*factory)(double);
   TestClass* obj;
   // factory_func factory;
-  factory create = (factory) dlsym(libhandle, "create");
-  if (!create){
-    printf("Failed to find Factory Function\n");
+  factory_create create = (factory_create) dlsym(libhandle, "create");
+  factory_destroy destroy = (factory_destroy) dlsym(libhandle, "destroy");
+  if (!create || !destroy){
+    printf("Error %s\n", dlerror());
     return -1;
   }
   else{
@@ -36,9 +40,6 @@ int main(){
   val = val * 5;
   obj->set_double(val, "Overloaded Fcn");
 
-
-
-
-
+  destroy(obj);
   dlclose(libhandle);
 }
