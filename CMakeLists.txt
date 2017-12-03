@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.0)
 find_package(Boost COMPONENTS system filesystem REQUIRED)
 
 INCLUDE_DIRECTORIES(${Boost_INCLUDE_DIR})
-INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR})
+INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/src)
 
 include(CheckCXXCompilerFlag)
 CHECK_CXX_COMPILER_FLAG("-std=c++11" COMPILER_SUPPORTS_CXX11)
@@ -16,6 +16,7 @@ else()
         message(STATUS "The compiler ${CMAKE_CXX_COMPILER} has no C++11 support. Please use a different C++ compiler.")
 endif()
 
+add_subdirectory(src)
 add_executable(pointer_test src/pointer_test.cpp)
 add_executable(template_fcn src/template_fcn.cpp)
 add_executable(test_sharedlib src/sharedlib_test.cpp)

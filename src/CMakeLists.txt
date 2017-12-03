@@ -1,0 +1,11 @@
+set(SRC_LIST
+    ${SRC_LIST}
+    ${CMAKE_CURRENT_SOURCE_DIR}/pointer_test.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/sharedlib_test.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/sharedlib_test2.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/sharedlib.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/sharedlib2.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/template_fcn.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/template_meta.cpp
+    PARENT_SCOPE
+)
